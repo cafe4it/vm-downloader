@@ -1,0 +1,13 @@
+{
+  "extName" : {
+    "message" : "Vimeo Downloader",
+    "description" : "Extension name"
+  },
+  "extDescription" : {
+    "message" : "Download any vimeo clip include embed vimeo...",
+    "description" : "Extension description"
+  },
+  "label_buttonGetClip" : {
+    "message" : "Get clip"
+  }
+}
