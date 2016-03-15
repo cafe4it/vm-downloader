@@ -3,8 +3,24 @@ body{
     width : 500px;
 }
 
-#app table{
+table{
     min-width: 500px;
+}
+
+table th{
+    vertical-align: middle;
+}
+
+table th:first-child{
+    max-width: 10px;
+    width: 5px;
+    text-align: center;
+}
+
+table th:last-child{
+    text-align: right;
+    max-width: 70px !important;
+    width: 50px;
 }
 
 .button-success,
@@ -45,4 +61,9 @@ body{
 
 .button-xlarge {
     font-size: 125%;
+}
+
+a.menu-selected{
+    color: #000066;
+    text-decoration: underline;
 }

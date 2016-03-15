@@ -1,19 +1,34 @@
 {
-  "extName" : {
-    "message" : "Vimeo Downloader",
-    "description" : "Extension name"
+  "extName": {
+    "message": "Vimeo Downloader",
+    "description": "Extension name"
   },
-  "extDescription" : {
-    "message" : "Download any vimeo clip include embed vimeo...",
-    "description" : "Extension description"
+  "extDescription": {
+    "message": "Download any vimeo clip include embed vimeo...",
+    "description": "Extension description"
   },
-  "label_buttonGetClip" : {
-    "message" : "Get clip"
+  "label_buttonGetClip": {
+    "message": "Get clip"
   },
-  "popup_table_header_title" : {
-    "message" : "Clip"
+  "popup_menu_Download": {
+    "message": "Download"
   },
-  "popup_table_header_label_buttonRemoveAll" : {
-    "message" : "Remove all"
+  "popup_menu_Configs": {
+    "message": "Configs"
+  },
+  "popup_menu_Sponsor": {
+    "message": "Sponsor"
+  },
+  "popup_tab_2_label_maxDownload": {
+    "message": "Max download"
+  },
+  "popup_tab_2_button_SaveConfig": {
+    "message": "Save"
+  },
+  "popup_table_header_title": {
+    "message": "Clip"
+  },
+  "popup_table_header_label_buttonRemoveAll": {
+    "message": "Remove all"
   }
 }

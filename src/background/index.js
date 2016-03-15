@@ -9,7 +9,7 @@ chromeStorage.addChangeListener((changes, area) => {
     if (changes.vimeos) {
         var vimeos = JSON.parse(changes.vimeos);
         chrome.browserAction.setBadgeText({
-            text: vimeos.length.toString()
+            text: (vimeos.length > 0) ? vimeos.length.toString() : ''
         });
     }
 }, {

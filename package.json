@@ -22,7 +22,8 @@
     "hmr"
   ],
   "dependencies": {
-    "react": "0.14.7"
+    "react": "0.14.7",
+    "react-simpletabs": "^0.7.0"
   },
   "devDependencies": {
     "alt": "^0.18.2",
@@ -45,6 +46,8 @@
     "lodash": "4.1.0",
     "purecss": "^0.6.0",
     "react-dom": "^0.14.7",
+    "react-router": "^2.0.1",
+    "react-router-active-component": "^4.0.0-rc.0",
     "style-loader": "^0.13.0",
     "url-loader": "0.5.7",
     "webpack": "1.12.2",
