@@ -1,4 +1,7 @@
-import welcome from 'shared/welcome'
-import "shared/page.css"
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App.jsx';
+import 'style!css!purecss/build/pure-min.css';
+import './index.css';
 
-welcome('popup/index.js')
+ReactDOM.render(React.createElement(App), document.getElementById('app'));

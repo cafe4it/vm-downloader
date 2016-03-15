@@ -3,19 +3,19 @@ import chromeStorage from 'chrome-storage-wrapper';
 
 chromeStorage.defaultArea = 'local';
 
-const videoUrlTpl = _.template('https://player.vimeo.com/video/<%=videoId%>');
+//const videoUrlTpl = _.template('https://player.vimeo.com/video/<%=videoId%>');
 
-chromeStorage.addChangeListener( (changes, area) => {
-    if(changes.vimeos){
+chromeStorage.addChangeListener((changes, area) => {
+    if (changes.vimeos) {
         var vimeos = JSON.parse(changes.vimeos);
         chrome.browserAction.setBadgeText({
-            text : vimeos.length.toString()
+            text: vimeos.length.toString()
         });
     }
 }, {
-    keys:['vimeos'], // limit change event in these keys
-    areas:'local' // limit change event in chrome.storage.local storage area
-} );
+    keys: ['vimeos', 'configs'],
+    areas: 'local'
+});
 
 /*
  const _AnalyticsCode = 'UA-74453743-1';
@@ -48,16 +48,31 @@ chromeStorage.addChangeListener( (changes, area) => {
  });
  */
 
+chromeStorage.get(['vimeos', 'configs'])
+    .then(items => {
+        if (!items.vimeos) {
+            chromeStorage.set('vimeos', JSON.stringify([]));
+        }
+        if (!items.configs) {
+            chromeStorage.set('configs', {maxConcurrentDownload: 10});
+        }
+    });
+
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg.action) return;
     switch (msg.action) {
         case 'FETCH_CLIP':
             var myWorker = new Worker(chrome.runtime.getURL('shared/worker.js'));
             myWorker.onmessage = function (e) {
-                chromeStorage.get(['vimeos'])
+                chromeStorage.get(['vimeos', 'configs'])
                     .then(items => {
                         var _vimeos = (items.vimeos) ? JSON.parse(items.vimeos) : [];
+                        var _configs = items.configs || {maxConcurrentDownload: 10};
                         _vimeos = _.unionBy([e.data], _vimeos, 'url');
+                        if (_vimeos.length > _configs.maxConcurrentDownload) {
+                            _vimeos = _.dropRight(_vimeos, (_vimeos.length - _configs.maxConcurrentDownload));
+                        }
+
                         chromeStorage.set('vimeos', JSON.stringify(_vimeos));
                     });
             }

@@ -9,5 +9,11 @@
   },
   "label_buttonGetClip" : {
     "message" : "Get clip"
+  },
+  "popup_table_header_title" : {
+    "message" : "Clip"
+  },
+  "popup_table_header_label_buttonRemoveAll" : {
+    "message" : "Remove all"
   }
 }

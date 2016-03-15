@@ -36,11 +36,26 @@ function runFetch(){
     })
 }
 
-runFetch();
+//runFetch();
 
 $(window.location).bind("change", function (objEvent, objData) {
+    console.log(objData);
+});
+
+var target = document.body;
+
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+    //console.warn(mutations);
     runFetch();
 });
+
+// configuration of the observer:
+var config = { attributes: true, childList: true, characterData: true };
+
+// pass in the target node, as well as the observer options
+observer.observe(target, config);
+
 
 (function ($) {
     // Default to the current location.
