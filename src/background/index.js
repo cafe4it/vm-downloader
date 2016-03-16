@@ -70,7 +70,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
                             action: 'SAVE_TO_DB',
                             data: e.data
                         })
-                        //console.info(e.data);
+                        console.info(e.data);
                     }
                     myWorker.postMessage(msg.data);
                 }
@@ -104,14 +104,25 @@ chrome.webRequest.onCompleted.addListener(function (details) {
     try {
         //console.log(details);
         if (details.frameId >= 0 && details.tabId > 0) {
+            var TYPE = 0;
+            var reg1 = /video\/[0-9]+\/?config\?/;
+            var reg2 = /video\/[0-9]+\/?/;
+
+            if(reg2.test(details.url)) TYPE = 2;
+            if(reg1.test(details.url)) TYPE = 1;
+
             var playerURL = details.url.split("?")[0],
                 playerURL = _.chain(playerURL).replace('/config', '').value();
             var videoId = playerURL.match(/video\/(.*)\/?/);
             if (videoId && videoId.length > 1) {
                 videoId = videoId[1];
+                //console.info(videoId);
+                console.log('Fetch Type', TYPE);
                 sendToFetch({
                     videoId : videoId,
-                    playerUrl : playerURL
+                    playerUrl : playerURL,
+                    fetchType : TYPE,
+                    originUrl : details.url
                 })
             }
         }
