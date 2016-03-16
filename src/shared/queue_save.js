@@ -7,13 +7,13 @@ var q = async.queue(saveToDB, parallelLimit);
 
 function saveToDB(data, cb) {
     try{
-        chromeStorage.get(['vimeos', 'configs'])
+        chromeStorage.get(['vimeos', 'maxConcurrentDownload'])
             .then(items => {
                 var _vimeos = (items.vimeos) ? JSON.parse(items.vimeos) : [];
-                var _configs = items.configs || {maxConcurrentDownload: 10};
+                var maxConcurrentDownload = items.maxConcurrentDownload || 5;
                 _vimeos = _.unionBy([data], _vimeos, 'url');
-                if (_vimeos.length > _configs.maxConcurrentDownload) {
-                    _vimeos = _.dropRight(_vimeos, (_vimeos.length - _configs.maxConcurrentDownload));
+                if (_vimeos.length > maxConcurrentDownload) {
+                    _vimeos = _.dropRight(_vimeos, (_vimeos.length - maxConcurrentDownload));
                 }
 
                 chromeStorage.set('vimeos', JSON.stringify(_vimeos)).then(()=> {

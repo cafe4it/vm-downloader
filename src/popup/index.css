@@ -78,3 +78,7 @@ a.menu-selected{
     color: #000066;
     text-decoration: underline;
 }
+
+label{
+    letter-spacing: normal !important;
+}

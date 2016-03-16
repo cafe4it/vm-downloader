@@ -5,8 +5,6 @@ import sendToFetch from '../shared/queue_fetch.js';
 
 chromeStorage.defaultArea = 'local';
 
-//const videoUrlTpl = _.template('https://player.vimeo.com/video/<%=videoId%>');
-
 chromeStorage.addChangeListener((changes, area) => {
     if (changes.vimeos) {
         var vimeos = JSON.parse(changes.vimeos);
@@ -15,7 +13,7 @@ chromeStorage.addChangeListener((changes, area) => {
         });
     }
 }, {
-    keys: ['vimeos', 'configs'],
+    keys: ['vimeos', 'maxConcurrentDownload'],
     areas: 'local'
 });
 
@@ -55,8 +53,8 @@ chromeStorage.get(['vimeos', 'configs'])
         if (!items.vimeos) {
             chromeStorage.set('vimeos', JSON.stringify([]));
         }
-        if (!items.configs) {
-            chromeStorage.set('configs', {maxConcurrentDownload: 10});
+        if (!items.maxConcurrentDownload) {
+            chromeStorage.set('maxConcurrentDownload', 5);
         }
     });
 
@@ -86,17 +84,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             });
             break;
         case 'SAVE_TO_DB':
-            /*chromeStorage.get(['vimeos', 'configs'])
-             .then(items => {
-             var _vimeos = (items.vimeos) ? JSON.parse(items.vimeos) : [];
-             var _configs = items.configs || {maxConcurrentDownload: 10};
-             _vimeos = _.unionBy([msg.data], _vimeos, 'url');
-             if (_vimeos.length > _configs.maxConcurrentDownload) {
-             _vimeos = _.dropRight(_vimeos, (_vimeos.length - _configs.maxConcurrentDownload));
-             }
-
-             chromeStorage.set('vimeos', JSON.stringify(_vimeos));
-             });*/
             saveToDB(msg.data);
             break;
     }
@@ -127,41 +114,8 @@ chrome.webRequest.onCompleted.addListener(function (details) {
                     playerUrl : playerURL
                 })
             }
-            /*_.throttle(function () {
-                //console.log(playerURL);
-                chrome.runtime.sendMessage({
-                    action: 'FETCH_CLIP',
-                    data: playerURL
-                })
-            }, 2000, {'trailing': false})();*/
-
-            /*chrome.runtime.sendMessage({
-             action: 'FETCH_CLIP',
-             data: playerURL
-             })*/
         }
     } catch (ex) {
         console.error(ex)
     }
 }, {urls: ["*://player.vimeo.com/video/*"]})
-
-chrome.webRequest.onResponseStarted.addListener(function (details) {
-    console.log('onResponseStarted', details);
-}, {urls: ["*://player.vimeo.com/video/!*"]})
-
-/*
- var filter = {
- url: [{
- urlMatches : '(player\.vimeo.com\/video)'
- }]
- };
-
- function onWebNav(details) {
- console.log(details);
- }
-
- chrome.webNavigation.onBeforeNavigate.addListener(onWebNav);
-
- chrome.tabs.onUpdated.addListener(function(tabId, changeInfo){
- console.log('Tab updated', tabId, changeInfo);
- })*/

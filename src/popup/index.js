@@ -5,6 +5,7 @@ import Home from './pages/Home.jsx';
 import Configs from './pages/Configs.jsx';
 import { Router, Route, Link, browserHistory,IndexRedirect } from 'react-router'
 import 'style!css!purecss/build/pure-min.css';
+import 'style!css!purecss/build/forms-min.css';
 import './index.css';
 
 import paths from './route_paths.js';
