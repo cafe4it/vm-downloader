@@ -5,10 +5,12 @@ export default class Configs extends React.Component {
         super(props);
 
         this.state = {
-            configs: []
+            configs: {
+                maxConcurrentDownload : 5
+            }
         }
 
-        this.__changedCongfigs = this.__changedCongfigs.bind(this);
+        this.__changedConfigs = this.__changedConfigs.bind(this);
         this._changeMaxDownLoad = this._changeMaxDownLoad.bind(this);
     }
 
@@ -22,10 +24,10 @@ export default class Configs extends React.Component {
     }
 
     componentDidUpdate() {
-        this.__changedCongfigs();
+        this.__changedConfigs();
     }
 
-    __changedCongfigs() {
+    __changedConfigs() {
         var configs = this.state.configs;
         chromeStorage.set('configs', configs);
     }

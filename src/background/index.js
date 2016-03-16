@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import chromeStorage from 'chrome-storage-wrapper';
+import saveToDB from '../shared/queue.js';
 
 chromeStorage.defaultArea = 'local';
 
@@ -18,7 +19,7 @@ chromeStorage.addChangeListener((changes, area) => {
 });
 
 /*
- const _AnalyticsCode = 'UA-74453743-1';
+ const _AnalyticsCode = 'UA-74453743-5';
  let service, tracker;
 
  var importScript = (function (oHead) {
@@ -62,23 +63,92 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg.action) return;
     switch (msg.action) {
         case 'FETCH_CLIP':
-            var myWorker = new Worker(chrome.runtime.getURL('shared/worker.js'));
-            myWorker.onmessage = function (e) {
-                chromeStorage.get(['vimeos', 'configs'])
-                    .then(items => {
-                        var _vimeos = (items.vimeos) ? JSON.parse(items.vimeos) : [];
-                        var _configs = items.configs || {maxConcurrentDownload: 10};
-                        _vimeos = _.unionBy([e.data], _vimeos, 'url');
-                        if (_vimeos.length > _configs.maxConcurrentDownload) {
-                            _vimeos = _.dropRight(_vimeos, (_vimeos.length - _configs.maxConcurrentDownload));
-                        }
+            checkExistsUrl(msg.data, function(isExists){
+                if(isExists === false){
+                    var myWorker = new Worker(chrome.runtime.getURL('shared/worker.js'));
+                    myWorker.onmessage = function (e) {
+                        chrome.runtime.sendMessage({
+                            action : 'SAVE_TO_DB',
+                            data : e.data
+                        })
+                    }
+                    myWorker.postMessage(msg.data);
+                }
+            })
+            break;
+        case 'DOWNLOAD_CLIP':
+            chrome.downloads.download({
+                url: msg.data.url,
+                filename: msg.data.filename,
+                conflictAction: 'prompt'
+            });
+            break;
+        case 'SAVE_TO_DB':
+            /*chromeStorage.get(['vimeos', 'configs'])
+                .then(items => {
+                    var _vimeos = (items.vimeos) ? JSON.parse(items.vimeos) : [];
+                    var _configs = items.configs || {maxConcurrentDownload: 10};
+                    _vimeos = _.unionBy([msg.data], _vimeos, 'url');
+                    if (_vimeos.length > _configs.maxConcurrentDownload) {
+                        _vimeos = _.dropRight(_vimeos, (_vimeos.length - _configs.maxConcurrentDownload));
+                    }
 
-                        chromeStorage.set('vimeos', JSON.stringify(_vimeos));
-                    });
-            }
-
-            myWorker.postMessage(msg.data);
+                    chromeStorage.set('vimeos', JSON.stringify(_vimeos));
+                });*/
+            saveToDB(msg.data);
             break;
     }
     return true;
-})
+});
+
+function checkExistsUrl(url, cb){
+    chromeStorage.get(['vimeos']).then(items =>{
+        var _vimeos = (items.vimeos) ? JSON.parse(items.vimeos) : [];
+        var exists = _.some(_vimeos, function(v){ return v.url == url});
+        cb(exists);
+    })
+}
+
+chrome.webRequest.onCompleted.addListener(function (details) {
+    try {
+        if (details.frameId >= 0) {
+            var playerURL = details.url.split("?")[0];
+            playerURL = _.chain(playerURL).replace('/config', '').value();
+            _.throttle(function () {
+                console.log(playerURL);
+                chrome.runtime.sendMessage({
+                    action: 'FETCH_CLIP',
+                    data: playerURL
+                })
+            }, 2000, {'trailing': false})();
+
+            /*chrome.runtime.sendMessage({
+             action: 'FETCH_CLIP',
+             data: playerURL
+             })*/
+        }
+    } catch (ex) {
+        console.error(ex)
+    }
+}, {urls: ["*://player.vimeo.com/video/*"]})
+
+chrome.webRequest.onResponseStarted.addListener(function(details){
+    console.log('onResponseStarted', details);
+}, {urls: ["*://player.vimeo.com/video/!*"]})
+
+/*
+var filter = {
+    url: [{
+        urlMatches : '(player\.vimeo.com\/video)'
+    }]
+};
+
+function onWebNav(details) {
+    console.log(details);
+}
+
+chrome.webNavigation.onBeforeNavigate.addListener(onWebNav);
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo){
+    console.log('Tab updated', tabId, changeInfo);
+})*/

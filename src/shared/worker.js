@@ -13,6 +13,8 @@ onmessage = function (e) {
                     url : playerURL,
                     videos : videos
                 });
+            }else{
+
             }
         }
     }

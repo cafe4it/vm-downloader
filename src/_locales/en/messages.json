@@ -25,10 +25,10 @@
   "popup_tab_2_button_SaveConfig": {
     "message": "Save"
   },
-  "popup_table_header_title": {
+  "popup_table_col2_header_title": {
     "message": "Clip"
   },
-  "popup_table_header_label_buttonRemoveAll": {
-    "message": "Remove all"
+  "popup_table_col3_header_title": {
+    "message": "Quality"
   }
 }

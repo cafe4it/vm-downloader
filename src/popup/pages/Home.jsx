@@ -1,11 +1,13 @@
 import React from 'react';
 import chromeStorage from 'chrome-storage-wrapper';
 import Vimeos from '../components/Vimeos.jsx';
+var Loader = require('react-loader');
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            vimeos: []
+            vimeos: [],
+            loaded : false
         }
 
         this.__vimeosChanged = this.__vimeosChanged.bind(this);
@@ -19,7 +21,8 @@ export default class Home extends React.Component {
         chromeStorage.get(['vimeos']).then((items)=> {
             var vimeos = JSON.parse(items.vimeos);
             self.setState({
-                vimeos: vimeos
+                vimeos: vimeos,
+                loaded : true
             })
         })
     }
@@ -50,7 +53,9 @@ export default class Home extends React.Component {
     render() {
         const vimeos = this.state.vimeos;
         return <div className="pure-u-5-5">
+            <Loader loaded={this.state.loaded}>
             <Vimeos vimeos={vimeos} onDelete={this._deleteVimeo} onDeleteAll={this._deleteAll}/>
+            </Loader>
         </div>
     }
 }

@@ -28,6 +28,7 @@
   "permissions": [
     "https://www.google-analytics.com/*",
     "https://player.vimeo.com/*",
+    "webRequest",
     "background",
     "tabs",
     "downloads",

@@ -1,3 +1,10 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+/* fontawesome */
+[class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
+}
+
 body{
     min-width: 500px;
     width : 500px;
@@ -17,10 +24,10 @@ table th:first-child{
     text-align: center;
 }
 
-table th:last-child{
+table th:last-child, td:last-child{
     text-align: right;
     max-width: 70px !important;
-    width: 50px;
+    width: 70px;
 }
 
 .button-success,
@@ -61,6 +68,10 @@ table th:last-child{
 
 .button-xlarge {
     font-size: 125%;
+}
+
+a{
+    text-decoration: none;
 }
 
 a.menu-selected{

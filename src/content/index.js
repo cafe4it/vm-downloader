@@ -1,3 +1,4 @@
+/*
 import './index.css';
 import _ from 'lodash';
 import chromeStorage from 'chrome-storage-wrapper';
@@ -37,6 +38,7 @@ function runFetch(){
 }
 
 //runFetch();
+/!*
 
 $(window.location).bind("change", function (objEvent, objData) {
     console.log(objData);
@@ -55,6 +57,7 @@ var config = { attributes: true, childList: true, characterData: true };
 
 // pass in the target node, as well as the observer options
 observer.observe(target, config);
+*!/
 
 
 (function ($) {
@@ -99,4 +102,4 @@ observer.observe(target, config);
     }
     // Set an interval to check the location changes.
     setInterval(fnCheckLocation, intIntervalTime);
-})(jQuery);
+})(jQuery);*/
