@@ -24,6 +24,11 @@ table th:first-child{
     text-align: center;
 }
 
+table th:nth-child(3){
+    max-width: 50px;
+    width: 30px;
+}
+
 table th:last-child, td:last-child{
     text-align: right;
     max-width: 70px !important;
@@ -79,6 +84,6 @@ a.menu-selected{
     text-decoration: underline;
 }
 
-label{
+.pure-g label{
     letter-spacing: normal !important;
 }

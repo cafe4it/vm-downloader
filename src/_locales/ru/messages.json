@@ -1,0 +1,31 @@
+{
+  "extName": {
+    "message": "Vimeo Супер Скачать",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Скачать все видео Vimeo , в том числе видео на других сайтах",
+    "description": "Extension description"
+  },
+  "popup_menu_Download": {
+    "message": "Скачать"
+  },
+  "popup_menu_Configs": {
+    "message": "конфиг"
+  },
+  "popup_menu_Sponsor": {
+    "message": "рекламировать"
+  },
+  "popup_configs_label_maxDownload": {
+    "message": "Максимальная Скачать"
+  },
+  "popup_table_col2_header_title": {
+    "message": "видео"
+  },
+  "popup_table_col3_header_title": {
+    "message": "качество"
+  },
+  "lang":{
+    "message" : "RU"
+  }
+}

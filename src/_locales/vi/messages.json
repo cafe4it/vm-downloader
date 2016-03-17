@@ -4,28 +4,28 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Download any Vimeo clips , including clips embedded on other sites",
+    "message": "Tải bất kỳ clip Vimeo, bao gồm cả clip Vimeo được nhúng trên các site khác",
     "description": "Extension description"
   },
   "popup_menu_Download": {
     "message": "Download"
   },
   "popup_menu_Configs": {
-    "message": "Configs"
+    "message": "Cài đặt"
   },
   "popup_menu_Sponsor": {
-    "message": "Sponsored"
+    "message": "Tài trợ bởi"
   },
   "popup_configs_label_maxDownload": {
-    "message": "Max current download"
+    "message": "Tối đa số lượng tải xuống"
   },
   "popup_table_col2_header_title": {
     "message": "Clip"
   },
   "popup_table_col3_header_title": {
-    "message": "Quality"
+    "message": "Chất lượng"
   },
   "lang":{
-    "message" : "EN"
+    "message" : "VI"
   }
 }

@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "homepage_url": "https://github.com/schovi/webpack-chrome-extension",
+  "homepage_url": "http://extensions.space/?utm_source=chrome_ext&utm_medium=cpc&utm_term=VimeoSuperDownloader&utm_campaign=product",
   "default_locale": "en",
   "content_scripts": [
     {

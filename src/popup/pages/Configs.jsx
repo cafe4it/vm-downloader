@@ -5,7 +5,7 @@ export default class Configs extends React.Component {
         super(props);
 
         this.state = {
-            maxConcurrentDownload : 5
+            maxConcurrentDownload: 5
         }
 
         this._changeMaxDownLoad = this._changeMaxDownLoad.bind(this);
@@ -21,34 +21,34 @@ export default class Configs extends React.Component {
         })
     }
 
-    _changeMaxDownLoad(e){
+    _changeMaxDownLoad(e) {
         this.setState({
-            maxConcurrentDownload : e.target.value
+            maxConcurrentDownload: e.target.value || 5
         })
     }
 
-    _saveMaxDownLoad(){
-        this.setState({
-            maxConcurrentDownload : this.refs.maxConcurrentDownload.value
-        });
-        chromeStorage.set('maxConcurrentDownload', this.ref.maxConcurrentDownload.value);
+    _saveMaxDownLoad() {
+        var value = this.state.maxConcurrentDownload;
+
+        chromeStorage.set('maxConcurrentDownload', value);
     }
 
     render() {
-        const tab2_label_maxDownload = chrome.i18n.getMessage('popup_tab_2_label_maxDownload');
-        const tab2_button_SaveConfig = chrome.i18n.getMessage('popup_tab_2_button_SaveConfig');
+        const tab2_label_maxDownload = chrome.i18n.getMessage('popup_configs_label_maxDownload');
+
         return (
             <div className="pure-u-5-5">
-                <div className="pure-form pure-form-stacked">
+                <div className="pure-form">
                     <fieldset>
-                        <div className="pure-g">
-                            <div className="pure-control-group">
-                                <label htmlFor="maxConcurrentDownload">{tab2_label_maxDownload}</label>
-                                <input id="maxConcurrentDownload" type="number" value={this.state.maxConcurrentDownload}
-                                       ref="maxConcurrentDownload" onChange={this._changeMaxDownLoad}/>
-                            </div>
-                            <button type="button" className="pure-button pure-button-primary" onClick={this._saveMaxDownLoad}>{tab2_button_SaveConfig}</button>
-                        </div>
+                        <label htmlFor="maxConcurrentDownload">{tab2_label_maxDownload} &nbsp;
+                            <input id="maxConcurrentDownload" type="number" value={this.state.maxConcurrentDownload}
+                                   ref="maxConcurrentDownload" onChange={this._changeMaxDownLoad} step="1" max="15" min="5"/>
+                        </label>
+                        &nbsp;
+                        <button className="pure-button pure-button-primary"
+                                onClick={this._saveMaxDownLoad}>
+                                <span className="fontawesome-save"></span>
+                        </button>
                     </fieldset>
                 </div>
             </div>
