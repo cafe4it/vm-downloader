@@ -86,11 +86,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             break;
         case 'OPEN_TAB':
             chrome.tabs.create({url : msg.data},function(tab){
-                if(tracker){
-                    tracker.sendEvent('App', 'Click Ads', msg.data || '');
-                }
                 sendResponse(true);
             });
+            if(tracker){
+                tracker.sendEvent('App', 'Click Ads', msg.data || '');
+            }
             break;
     }
     return true;
