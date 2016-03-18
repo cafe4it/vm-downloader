@@ -87,3 +87,9 @@ a.menu-selected{
 .pure-g label{
     letter-spacing: normal !important;
 }
+
+.ads_container img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

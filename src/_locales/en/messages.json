@@ -4,7 +4,7 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Download any Vimeo clips , including clips embedded on other sites",
+    "message": "Download any Vimeo videos , including videos embedded on other sites",
     "description": "Extension description"
   },
   "popup_menu_Download": {

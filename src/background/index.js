@@ -85,12 +85,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             saveToDB(msg.data);
             break;
         case 'OPEN_TAB':
-            chrome.tabs.create({url : msg.data},function(tab){
-                sendResponse(true);
-            });
             if(tracker){
                 tracker.sendEvent('App', 'Click Ads', msg.data || '');
             }
+            chrome.tabs.create({url : msg.data});
             break;
     }
     return true;
