@@ -85,10 +85,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             saveToDB(msg.data);
             break;
         case 'OPEN_TAB':
-            if(tracker){
+            if (tracker) {
                 tracker.sendEvent('App', 'Click Ads', msg.data || '');
             }
-            chrome.tabs.create({url : msg.data});
+            chrome.tabs.create({url: msg.data});
             break;
     }
     return true;
@@ -111,23 +111,26 @@ chrome.webRequest.onCompleted.addListener(function (details) {
             var TYPE = 0;
             var reg1 = /video\/[0-9]+\/?config\?/;
             var reg2 = /video\/[0-9]+\/?/;
+            var m3u8 = /\.m3u8/;
 
-            if(reg2.test(details.url)) TYPE = 2;
-            if(reg1.test(details.url)) TYPE = 1;
+            if (reg2.test(details.url)) TYPE = 2;
+            if (reg1.test(details.url)) TYPE = 1;
 
-            var playerURL = details.url.split("?")[0],
-                playerURL = _.chain(playerURL).replace('/config', '').value();
-            var videoId = playerURL.match(/video\/(.*)\/?/);
-            if (videoId && videoId.length > 1) {
-                videoId = videoId[1];
-                //console.info(videoId);
-                //console.log('Fetch Type', TYPE);
-                sendToFetch({
-                    videoId : videoId,
-                    playerUrl : playerURL,
-                    fetchType : TYPE,
-                    originUrl : details.url
-                })
+            if (TYPE >= 1) {
+                var playerURL = details.url.split("?")[0],
+                    playerURL = _.chain(playerURL).replace('/config', '').value();
+                var videoId = playerURL.match(/video\/(.*)\/?/);
+                if (videoId && videoId.length > 1) {
+                    videoId = videoId[1];
+                    //console.info(videoId);
+                    //console.log('Fetch Type', TYPE);
+                    sendToFetch({
+                        videoId: videoId,
+                        playerUrl: playerURL,
+                        fetchType: TYPE,
+                        originUrl: details.url
+                    })
+                }
             }
         }
     } catch (ex) {
