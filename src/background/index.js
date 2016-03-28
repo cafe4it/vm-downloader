@@ -58,6 +58,7 @@ chromeStorage.get(['vimeos', 'configs'])
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg.action) return;
+    console.log(msg);
     switch (msg.action) {
         case 'FETCH_CLIP':
             checkExistsUrl(msg.data.playerUrl, function (isExists) {
@@ -104,6 +105,7 @@ function checkExistsUrl(url, cb) {
     })
 }
 
+
 chrome.webRequest.onCompleted.addListener(function (details) {
     try {
         //console.log(details);
@@ -124,12 +126,19 @@ chrome.webRequest.onCompleted.addListener(function (details) {
                     videoId = videoId[1];
                     //console.info(videoId);
                     //console.log('Fetch Type', TYPE);
-                    sendToFetch({
+                    //console.log(videoId,playerURL);
+                    var data = {
                         videoId: videoId,
                         playerUrl: playerURL,
                         fetchType: TYPE,
                         originUrl: details.url
-                    })
+                    }
+                    //sendToFetch()
+                    console.log(data);
+                    chrome.runtime.sendMessage({
+                        action: 'FETCH_CLIP',
+                        data: data
+                    });
                 }
             }
         }
