@@ -4,3 +4,8 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
     return true;
 })*/
+
+/*
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse){
+    console.log(msg);
+})*/

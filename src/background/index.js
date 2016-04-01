@@ -41,8 +41,17 @@ chromeStorage.addChangeListener((changes, area) => {
             text: (vimeos.length > 0) ? vimeos.length.toString() : ''
         });
     }
+
+    if (changes.requestFetch) {
+        chrome.runtime.sendMessage({
+            action: 'FETCH_CLIP',
+            data: changes.requestFetch
+        });
+        chromeStorage.set('requestFetch', null);
+    }
+
 }, {
-    keys: ['vimeos', 'maxConcurrentDownload'],
+    keys: ['vimeos', 'maxConcurrentDownload', 'requestFetch'],
     areas: 'local'
 });
 
@@ -58,7 +67,6 @@ chromeStorage.get(['vimeos', 'configs'])
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg.action) return;
-    console.log(msg);
     switch (msg.action) {
         case 'FETCH_CLIP':
             checkExistsUrl(msg.data.playerUrl, function (isExists) {
@@ -69,7 +77,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
                             action: 'SAVE_TO_DB',
                             data: e.data
                         })
-                        console.info(e.data);
+                        //console.info(e.data);
                     }
                     myWorker.postMessage(msg.data);
                 }
@@ -133,12 +141,12 @@ chrome.webRequest.onCompleted.addListener(function (details) {
                         fetchType: TYPE,
                         originUrl: details.url
                     }
-                    //sendToFetch()
-                    console.log(data);
-                    chrome.runtime.sendMessage({
-                        action: 'FETCH_CLIP',
-                        data: data
-                    });
+                    sendToFetch(data);
+                    //console.log(data);
+                    /*chrome.runtime.sendMessage({
+                     action: 'FETCH_CLIP',
+                     data: data
+                     });*/
                 }
             }
         }
