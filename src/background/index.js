@@ -26,7 +26,7 @@ var importScript = (function (oHead) {
 })(document.head || document.getElementsByTagName("head")[0]);
 
 importScript(chrome.runtime.getURL('shared/google-analytics-bundle.js'), function () {
-    console.info('google analytics platform loaded...');
+    //console.info('google analytics platform loaded...');
     service = analytics.getService('vimeo_super_downloader');
     tracker = service.getTracker(_AnalyticsCode);
     tracker.sendAppView('App view');

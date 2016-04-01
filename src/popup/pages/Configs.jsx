@@ -42,7 +42,7 @@ export default class Configs extends React.Component {
                     <fieldset>
                         <label htmlFor="maxConcurrentDownload">{tab2_label_maxDownload} &nbsp;
                             <input id="maxConcurrentDownload" type="number" value={this.state.maxConcurrentDownload}
-                                   ref="maxConcurrentDownload" onChange={this._changeMaxDownLoad} step="1" max="15" min="5"/>
+                                   ref="maxConcurrentDownload" onChange={this._changeMaxDownLoad} step="1" max="25" min="1"/>
                         </label>
                         &nbsp;
                         <button className="pure-button pure-button-primary"
