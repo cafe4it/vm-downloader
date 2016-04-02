@@ -132,9 +132,7 @@ chrome.webRequest.onCompleted.addListener(function (details) {
                 var videoId = playerURL.match(/video\/(.*)\/?/);
                 if (videoId && videoId.length > 1) {
                     videoId = videoId[1];
-                    //console.info(videoId);
-                    //console.log('Fetch Type', TYPE);
-                    //console.log(videoId,playerURL);
+
                     var data = {
                         videoId: videoId,
                         playerUrl: playerURL,
@@ -142,11 +140,6 @@ chrome.webRequest.onCompleted.addListener(function (details) {
                         originUrl: details.url
                     }
                     sendToFetch(data);
-                    //console.log(data);
-                    /*chrome.runtime.sendMessage({
-                     action: 'FETCH_CLIP',
-                     data: data
-                     });*/
                 }
             }
         }
