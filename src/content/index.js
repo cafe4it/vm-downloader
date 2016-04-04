@@ -1,11 +1,10 @@
 /*
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-    if (!msg.action)return;
+import chromeStorage from 'chrome-storage-wrapper';
+import _ from 'lodash';
 
-    return true;
-})*/
-
-/*
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse){
-    console.log(msg);
-})*/
+    if(msg.action === 'FETCH_CLIP'){
+
+    }
+});
+*/

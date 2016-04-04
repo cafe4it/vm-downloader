@@ -41,17 +41,8 @@ chromeStorage.addChangeListener((changes, area) => {
             text: (vimeos.length > 0) ? vimeos.length.toString() : ''
         });
     }
-
-    if (changes.requestFetch) {
-        chrome.runtime.sendMessage({
-            action: 'FETCH_CLIP',
-            data: changes.requestFetch
-        });
-        chromeStorage.set('requestFetch', null);
-    }
-
 }, {
-    keys: ['vimeos', 'maxConcurrentDownload', 'requestFetch'],
+    keys: ['vimeos', 'maxConcurrentDownload'],
     areas: 'local'
 });
 
@@ -68,30 +59,12 @@ chromeStorage.get(['vimeos', 'configs'])
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg.action) return;
     switch (msg.action) {
-        case 'FETCH_CLIP':
-            checkExistsUrl(msg.data.playerUrl, function (isExists) {
-                if (isExists === false) {
-                    var myWorker = new Worker(chrome.runtime.getURL('shared/worker.js'));
-                    myWorker.onmessage = function (e) {
-                        chrome.runtime.sendMessage({
-                            action: 'SAVE_TO_DB',
-                            data: e.data
-                        })
-                        //console.info(e.data);
-                    }
-                    myWorker.postMessage(msg.data);
-                }
-            })
-            break;
         case 'DOWNLOAD_CLIP':
             chrome.downloads.download({
                 url: msg.data.url,
                 filename: msg.data.filename,
                 conflictAction: 'prompt'
             });
-            break;
-        case 'SAVE_TO_DB':
-            saveToDB(msg.data);
             break;
         case 'OPEN_TAB':
             if (tracker) {
@@ -103,21 +76,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     return true;
 });
 
-function checkExistsUrl(url, cb) {
-    chromeStorage.get(['vimeos']).then(items => {
-        var _vimeos = (items.vimeos) ? JSON.parse(items.vimeos) : [];
-        var exists = _.some(_vimeos, function (v) {
-            return v.url == url
-        });
-        cb(exists);
-    })
-}
-
 
 chrome.webRequest.onCompleted.addListener(function (details) {
     try {
         //console.log(details);
-        if (details.frameId >= 0 && details.tabId > 0) {
+        if (details.frameId >= 0 && details.tabId >= 0) {
             var TYPE = 0;
             var reg1 = /video\/[0-9]+\/?config\?/;
             var reg2 = /video\/[0-9]+\/?/;
