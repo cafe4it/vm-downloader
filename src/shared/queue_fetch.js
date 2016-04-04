@@ -3,27 +3,20 @@ import _ from 'lodash';
 import chromeStorage from 'chrome-storage-wrapper';
 import saveToDB from '../shared/queue_save.js';
 
-var parallelLimit = 1;
+var parallelLimit = 2;
 
 var q = async.queue(sendToFetch, parallelLimit);
 
 function sendToFetch(data, cb) {
     try {
-        //chromeStorage.set('requestFetch', data);
-        //console.info(data);
-        /*chrome.tabs.sendMessage(data.tabId, {
-            action: 'FETCH_CLIP',
-            data: data.data
-        });*/
+
         checkExistsUrl(data.playerUrl, function (isExists) {
             if (isExists === false) {
                 var myWorker = new Worker(chrome.runtime.getURL('shared/worker.js'));
                 myWorker.onmessage = function (e) {
-                    //console.log(e.data);
                     saveToDB(e.data);
                     cb(true);
                 }
-                console.log(data);
                 myWorker.postMessage(data);
             }
         })

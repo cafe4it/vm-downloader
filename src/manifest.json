@@ -8,10 +8,8 @@
         "<all_urls>"
       ],
       "js": [
-        "shared/worker_proxy.js",
-        "content/index.js"
-      ],
-      "run_at" : "document_start"
+        "shared/worker_proxy.js"
+      ]
     }
   ],
   "background": {
@@ -28,7 +26,7 @@
 
   "permissions": [
     "https://www.google-analytics.com/*",
-    "https://player.vimeo.com/*",
+    "*://player.vimeo.com/*",
     "webRequest",
     "background",
     "tabs",

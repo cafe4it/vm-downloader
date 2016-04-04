@@ -102,6 +102,7 @@ chrome.webRequest.onCompleted.addListener(function (details) {
                         fetchType: TYPE,
                         originUrl: details.url
                     }
+                    //console.log(data);
                     sendToFetch(data);
                 }
             }
