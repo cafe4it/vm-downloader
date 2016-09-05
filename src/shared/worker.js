@@ -18,6 +18,7 @@ try{
                                     return {
                                         id : v.id,
                                         url : v.url,
+	                                    mime: v.mime,
                                         quality : v.quality
                                     }
                                 });

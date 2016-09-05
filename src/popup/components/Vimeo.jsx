@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import ext from '../../shared/ext.js';
 export default class Vimeo extends React.Component {
     constructor(props) {
         super(props)
@@ -11,7 +12,8 @@ export default class Vimeo extends React.Component {
                     id: video.id,
                     index: _.parseInt(video.quality),
                     quality: video.quality,
-                    url: video.url
+                    url: video.url,
+	                mime: video.mime
                 }
             })
             .orderBy(['index'], ['desc']).value();
@@ -23,7 +25,6 @@ export default class Vimeo extends React.Component {
         var selectedVideo = _.find(this.videos, function (v) {
             return v.id == selectedVideoId
         });
-        console.log(selectedVideo,selectedVideoId);
         if (selectedVideo) {
             var _title = _
                 .chain(this.props.vimeo.title)
@@ -33,11 +34,12 @@ export default class Vimeo extends React.Component {
                 .capitalize()
                 .value();
             var title = _title + '-' + selectedVideo.quality || selectedVideo.id + '-' + selectedVideo.quality;
+	        var _ext = ext(selectedVideo.mime || '');
             _.throttle(function () {
                 chrome.runtime.sendMessage({
                     action: 'DOWNLOAD_CLIP',
                     data: {
-                        filename: title,
+                        filename: title+_ext,
                         url: selectedVideo.url
                     }
                 })
