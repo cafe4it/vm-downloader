@@ -4,28 +4,28 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Download any Vimeo videos , including videos embedded on other sites",
+    "message": "Baixe vídeos Vimeo, incluindo vídeos incorporados em outros sites",
     "description": "Extension description"
   },
   "popup_menu_Download": {
-    "message": "Download"
+    "message": "Baixar"
   },
   "popup_menu_Configs": {
-    "message": "Configs"
+    "message": "Configuração"
   },
   "popup_menu_Sponsor": {
-    "message": "You May Like This"
+    "message": "Você pode gostar desse"
   },
   "popup_configs_label_maxDownload": {
-    "message": "Max current download"
+    "message": "Máximo descargas simultáneas"
   },
   "popup_table_col2_header_title": {
-    "message": "Clip"
+    "message": "Clipe"
   },
   "popup_table_col3_header_title": {
-    "message": "Quality"
+    "message": "Qualidade"
   },
   "lang":{
-    "message" : "EN"
+    "message" : "PT_BR"
   }
 }
