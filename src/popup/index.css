@@ -31,8 +31,13 @@ table th:nth-child(3){
 
 table th:last-child, td:last-child{
     text-align: right;
-    max-width: 70px !important;
-    width: 70px;
+    max-width: 85px !important;
+    width: 85px;
+    padding: 6px !important;
+}
+
+.video-ctrl-btn{
+    padding: 5.1px !important;
 }
 
 .button-success,
