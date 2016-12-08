@@ -8,7 +8,7 @@
         "<all_urls>"
       ],
       "js": [
-        "shared/worker_proxy.js"
+        "shared/worker_proxy.js", "content/index.js"
       ]
     }
   ],

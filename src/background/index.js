@@ -76,14 +76,24 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     return true;
 });
 
+chrome.webRequest.onCompleted.addListener(function (details) {
+    console.log(details)
+}, {urls: ["*://*.vimeocdn.com/*"]})
 
 chrome.webRequest.onCompleted.addListener(function (details) {
     try {
-        console.log(details);
-        if (details.frameId >= 0 && details.tabId >= 0) {
+        // if(details.url.indexOf('vimeocdn.com') !== -1){
+        //     console.log(details.url)
+        // }
+        // if(details.url.indexOf('title=0') !== -1){
+        //     chrome.runtime.sendMessage({
+        //         action: 'FETCH_IFRAME'
+        //     })
+        // }
+        console.log(details)
+        if (details.frameId >= 0 && details.tabId >= 0 && details.url.indexOf('title=0') === -1) {
             var TYPE = 0;
             var reg1 = /video\/[0-9]+\/?config\?/;
-            var reg11 = /video\/[0-9]+\/?title\=\0\?/;
             var reg2 = /video\/[0-9]+\/?/;
             var m3u8 = /\.m3u8/;
 
@@ -111,4 +121,4 @@ chrome.webRequest.onCompleted.addListener(function (details) {
     } catch (ex) {
         console.error(ex)
     }
-}, {urls: ["*://player.vimeo.com/video/*","*://*.vimeocdn.com/*"]})
+}, {urls: ["*://player.vimeo.com/video/*"]})
