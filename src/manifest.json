@@ -2,6 +2,7 @@
   "manifest_version": 2,
   "homepage_url": "http://extensions.space/?utm_source=chrome_ext&utm_medium=cpc&utm_term=VimeoSuperDownloader&utm_campaign=product",
   "default_locale": "en",
+  "devtools_page": "devtools/index.html",
   "content_scripts": [
     {
       "matches": [
@@ -27,11 +28,14 @@
   "permissions": [
     "https://www.google-analytics.com/*",
     "*://player.vimeo.com/*",
+    "http://*/*",
+    "https://*/*",
     "webRequest",
     "background",
     "tabs",
     "downloads",
-    "storage"
+    "storage",
+    "contextMenus"
   ],
   "web_accessible_resources": [
     "shared/worker_proxy.html",

@@ -7,6 +7,7 @@ import Content     from './processor/content'
 import Overrides   from './processor/overrides'
 import Locales   from './processor/locales'
 import Options   from './processor/options'
+import DevTools   from './processor/devtools'
 import War   from './processor/war'
 
 const processors = [
@@ -28,6 +29,8 @@ const processors = [
     Locales,
     // Process options page
     Options,
+    // Process devtools page
+    DevTools,
     // Process Web accessible resources
     War
 ]
