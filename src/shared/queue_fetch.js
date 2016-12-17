@@ -16,6 +16,7 @@ function sendToFetch(data, cb) {
                 myWorker.onmessage = function (e) {
                     saveToDB(e.data);
                     cb(true);
+	                myWorker.terminate()
                 }
                 myWorker.postMessage(data);
             }

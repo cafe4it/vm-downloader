@@ -8,10 +8,3 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse){
     }
 });
 */
-console.log(document.body)
-import _ from 'lodash';
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse){
-	if(msg.action === 'FETCH_IFRAME'){
-		console.log(document.body)
-	}
-});

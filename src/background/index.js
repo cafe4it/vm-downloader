@@ -56,42 +56,9 @@ chromeStorage.get(['vimeos', 'configs'])
         }
     });
 
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-    if (!msg.action) return;
-    switch (msg.action) {
-        case 'DOWNLOAD_CLIP':
-            chrome.downloads.download({
-                url: msg.data.url,
-                filename: msg.data.filename,
-                conflictAction: 'prompt'
-            });
-            break;
-        case 'OPEN_TAB':
-            if (tracker) {
-                tracker.sendEvent('App', 'Click Ads', msg.data || '');
-            }
-            chrome.tabs.create({url: msg.data});
-            break;
-    }
-    return true;
-});
-
-chrome.webRequest.onCompleted.addListener(function (details) {
-    console.log(details)
-}, {urls: ["*://*.vimeocdn.com/*"]})
-
 chrome.webRequest.onCompleted.addListener(function (details) {
     try {
-        // if(details.url.indexOf('vimeocdn.com') !== -1){
-        //     console.log(details.url)
-        // }
-        // if(details.url.indexOf('title=0') !== -1){
-        //     chrome.runtime.sendMessage({
-        //         action: 'FETCH_IFRAME'
-        //     })
-        // }
-        console.log(details)
-        if (details.frameId >= 0 && details.tabId >= 0 && details.url.indexOf('title=0') === -1) {
+        if (details.frameId >= 0 && details.tabId >= 0) {
             var TYPE = 0;
             var reg1 = /video\/[0-9]+\/?config\?/;
             var reg2 = /video\/[0-9]+\/?/;
@@ -122,3 +89,23 @@ chrome.webRequest.onCompleted.addListener(function (details) {
         console.error(ex)
     }
 }, {urls: ["*://player.vimeo.com/video/*"]})
+
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+	if (!msg.action) return;
+	switch (msg.action) {
+		case 'DOWNLOAD_CLIP':
+			chrome.downloads.download({
+				url: msg.data.url,
+				filename: msg.data.filename,
+				conflictAction: 'prompt'
+			});
+			break;
+		case 'OPEN_TAB':
+			if (tracker) {
+				tracker.sendEvent('App', 'Click Ads', msg.data || '');
+			}
+			chrome.tabs.create({url: msg.data});
+			break;
+	}
+	return true;
+});
