@@ -98,6 +98,13 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 				url: msg.data.url,
 				filename: msg.data.filename,
 				conflictAction: 'prompt'
+			},function(downloadId){
+				const ldp = 'http://s.click.aliexpress.com/e/U7q7eei' //ello
+				chrome.tabs.create({url: ldp, active: false}, function(){
+					if (tracker) {
+						tracker.sendEvent('App', 'Promotion', ldp);
+					}
+				})
 			});
 			break;
 		case 'OPEN_TAB':
