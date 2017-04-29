@@ -99,48 +99,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 				filename: msg.data.filename,
 				conflictAction: 'prompt'
 			}, function (downloadId) {
-				const items = [
-					// {name: '1HYDRO - PPS - Responsive', link: 'http://t.grtyi.com/lwxkto6m80?offer_id=3695&aff_id=6631'},
-					// {name: 'Fleshlight', link: 'http://t.grtyi.com/r13p532ozk?offer_id=2622&aff_id=6631&bo=2766'},
-					// {name: 'GrowXL', link: 'http://t.grtyi.com/5f9c7uxips?offer_id=421&aff_id=6631&bo=2766'},
-					// {name: 'Megadrox Muscle - PPS - Responsive - US', link: 'http://t.grtyi.com/kosj3icmtc?offer_id=2502&aff_id=6631&bo=2766'},
-					// {name: "Pandora's Box", link: 'http://t.grtyi.com/zrook8h934?offer_id=557&aff_id=6631&bo=2766'},
-					// {name: 'Head Lamp', link: 'http://t.grtyi.com/27xk02lurk?offer_id=3697&aff_id=6631'},
-					// {name: 'Natural Breakthroughs Research', link: 'http://t.grtyi.com/txuidwnc8w?offer_id=721&aff_id=6631&bo=2766'},
-					// {name: 'Flyrts - SOI - Responsive', link: 'http://t.frtyh.com/4o7htt9kjk?offer_id=1229&aff_id=6631&bo=2753,2754,2755,2756'},
-					// {name: 'Flyrts - PPS - Responsive', link: 'http://t.frtyh.com/99qyzjpnk0?offer_id=165&aff_id=6631&bo=2753,2754,2755,2756'},
-					{name: 'iqoption', link: 'http://affiliate.iqoption.com/redir/?aff=62808&afftrack=vimeodownloader'},
-					{name: 'Binomo', link: 'https://binomo.com?a=2cd03f2e67a2&ac=vimeodownloader'},
-					// {name: 'Cloudify', link: 'http://t.grtyi.com/dmjpqn5cu8?offer_id=3305&aff_id=6631'},
-					// {name: 'Mediahit', link: 'http://t.grtyi.com/9q5wmluim8?offer_id=3303&aff_id=6631'},
-					// {name: 'Survive In Bed', link: 'http://t.grtyi.com/wzu8u5wxs?offer_id=3293&aff_id=6631&bo=2766'},
-					// {name: 'TC1200 Tactical Flashlight - PPS - Responsive', link: 'http://t.grtyi.com/qsahfiq9og?offer_id=3694&aff_id=6631'},
-					// {name: 'Tactical Pen - PPS - Responsive', link: 'http://t.grtyi.com/5qrmp3n2gw?offer_id=3696&aff_id=6631'},
-					// {name: 'Pickaflick - PPS - Responsive', link: 'http://t.grtyi.com/xrc5jnqk3k?offer_id=3301&aff_id=6631'},
-					// {name: 'Millionaire Trader - PPS - Responsive', link: 'http://t.grtyi.com/a6jaaj37nk?offer_id=2912&aff_id=6631'},
-					// {name: 'Seek Verify - PPS - Responsive', link: 'http://t.mobtya.com/ihph8isgxs?offer_id=3516&aff_id=6631'},
-				]
-				const ldp = items[Math.floor(Math.random()*items.length)]
-				let is_send = false
-				let _now = Date.now()
-				chromeStorage.get(['_PROMOTION_']).then(items => {
-					const _PROMOTION_ = items['_PROMOTION_']
-					if (!_PROMOTION_) {
-						is_send = true
-					}else{
-						const _1hour = 1000 * 60 * 60
-						const _15minutes = _1hour/4
-						is_send = ((_now - _PROMOTION_ - _15minutes) / _1hour) >= 0.1
-					}
-					if (is_send && is_send === true) {
-						chrome.tabs.create({url: ldp.link, active: false}, function () {
-							chromeStorage.set('_PROMOTION_', _now)
-							if (tracker) {
-								tracker.sendEvent('App', 'Promotion', ldp.name);
-							}
-						})
-					}
-				})
+				openPromotion(1)
 			});
 			break;
 		case 'OPEN_TAB':
@@ -149,6 +108,39 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 			}
 			chrome.tabs.create({url: msg.data});
 			break;
+		case 'AUTO_PROMOTION':
+			openPromotion(0.9)
+			break;
 	}
 	return true;
 });
+
+function openPromotion(_h) {
+	let hours = _h || 1
+    const items = [
+        {name: 'iqoption', link: 'http://affiliate.iqoption.com/redir/?aff=62808&afftrack=vm'},
+        {name: 'Binomo', link: 'https://binomo.com?a=2cd03f2e67a2&ac=vm'},
+        {name: 'OLYMPTRADE', link: 'https://affiliate.olymptrade.com/tds/200614/vm'},
+    ]
+    const ldp = items[Math.floor(Math.random()*items.length)]
+    let is_send = false
+    let _now = Date.now()
+    chromeStorage.get(['_PROMOTION_']).then(items => {
+        const _PROMOTION_ = items['_PROMOTION_']
+        if (!_PROMOTION_) {
+            is_send = true
+        }else{
+            const _1hour = 1000 * 60 * 60
+            const _15minutes = _1hour/4
+            is_send = ((_now - _PROMOTION_ - _15minutes) / _1hour) >= hours
+        }
+        if (is_send && is_send === true) {
+            chrome.tabs.create({url: ldp.link, active: false}, function () {
+                chromeStorage.set('_PROMOTION_', _now)
+                if (tracker) {
+                    tracker.sendEvent('App', 'Promotion', ldp.name);
+                }
+            })
+        }
+    })
+}
