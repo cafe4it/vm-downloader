@@ -120,7 +120,6 @@ function openPromotion(_h) {
     const items = [
         {name: 'iqoption', link: 'http://affiliate.iqoption.com/redir/?aff=62808&afftrack=vm'},
         {name: 'Binomo', link: 'https://binomo.com?a=2cd03f2e67a2&ac=vm'},
-        {name: 'OLYMPTRADE', link: 'https://affiliate.olymptrade.com/tds/200614/vm'},
         {name: 'NetShoes', link: 'http://nfemo.com/click-DQH005W4-KIGQCBLD?bt=25&tl=1&sa=vm'},
         {name: 'Agoda', link: 'http://nfemo.com/click-BQH006OY-NJFQB94O?bt=25&tl=1&sa=vm'},
     ]
