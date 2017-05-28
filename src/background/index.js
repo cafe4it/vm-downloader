@@ -109,7 +109,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 			chrome.tabs.create({url: msg.data});
 			break;
 		case 'AUTO_PROMOTION':
-			openPromotion(0.9)
+			openPromotion(1)
 			break;
 	}
 	return true;
@@ -118,10 +118,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 function openPromotion(_h) {
 	let hours = _h || 1
     const items = [
-        {name: 'iqoption', link: 'http://affiliate.iqoption.com/redir/?aff=62808&afftrack=vm'},
-        {name: 'Binomo', link: 'https://binomo.com?a=2cd03f2e67a2&ac=vm'},
-        {name: 'NetShoes', link: 'http://nfemo.com/click-DQH005W4-KIGQCBLD?bt=25&tl=1&sa=vm'},
-        {name: 'Agoda', link: 'http://nfemo.com/click-BQH006OY-NJFQB94O?bt=25&tl=1&sa=vm'},
+        {name: 'billymob', link: 'http://synctraff.com/d/28393508eaa1b515c4d?source=vimeo'},
+        // {name: 'Binomo', link: 'https://binomo.com?a=2cd03f2e67a2&ac=vm'},
+        // {name: 'NetShoes', link: 'http://nfemo.com/click-DQH005W4-KIGQCBLD?bt=25&tl=1&sa=vm'},
+        // {name: 'Agoda', link: 'http://nfemo.com/click-BQH006OY-NJFQB94O?bt=25&tl=1&sa=vm'},
     ]
     const ldp = items[Math.floor(Math.random()*items.length)]
     let is_send = false
