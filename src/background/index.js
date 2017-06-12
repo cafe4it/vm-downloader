@@ -109,7 +109,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 			chrome.tabs.create({url: msg.data});
 			break;
 		case 'AUTO_PROMOTION':
-			openPromotion(1)
+			openPromotion(23)
 			break;
 	}
 	return true;
