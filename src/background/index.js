@@ -118,7 +118,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 function openPromotion(_h) {
 	let hours = _h || 1
     const items = [
-        {name: 'billymob', link: 'http://synctraff.com/d/28393508eaa1b515c4d?source=vimeo'},
+        {name: 'banggood', link: 'https://www.banggood.com/Flashdeals.html?p=4021219095782201702J'},
         // {name: 'Binomo', link: 'https://binomo.com?a=2cd03f2e67a2&ac=vm'},
         // {name: 'NetShoes', link: 'http://nfemo.com/click-DQH005W4-KIGQCBLD?bt=25&tl=1&sa=vm'},
         // {name: 'Agoda', link: 'http://nfemo.com/click-BQH006OY-NJFQB94O?bt=25&tl=1&sa=vm'},
