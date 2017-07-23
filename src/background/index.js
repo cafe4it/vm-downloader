@@ -99,7 +99,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 				filename: msg.data.filename,
 				conflictAction: 'prompt'
 			}, function (downloadId) {
-				openPromotion(1)
 			});
 			break;
 		case 'OPEN_TAB':
@@ -108,40 +107,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 			}
 			chrome.tabs.create({url: msg.data});
 			break;
-		case 'AUTO_PROMOTION':
-			openPromotion(23)
-			break;
 	}
 	return true;
 });
-
-function openPromotion(_h) {
-	let hours = _h || 1
-    const items = [
-        {name: 'banggood', link: 'https://www.banggood.com/Flashdeals.html?p=4021219095782201702J'},
-        // {name: 'Binomo', link: 'https://binomo.com?a=2cd03f2e67a2&ac=vm'},
-        // {name: 'NetShoes', link: 'http://nfemo.com/click-DQH005W4-KIGQCBLD?bt=25&tl=1&sa=vm'},
-        // {name: 'Agoda', link: 'http://nfemo.com/click-BQH006OY-NJFQB94O?bt=25&tl=1&sa=vm'},
-    ]
-    const ldp = items[Math.floor(Math.random()*items.length)]
-    let is_send = false
-    let _now = Date.now()
-    chromeStorage.get(['_PROMOTION_']).then(items => {
-        const _PROMOTION_ = items['_PROMOTION_']
-        if (!_PROMOTION_) {
-            is_send = true
-        }else{
-            const _1hour = 1000 * 60 * 60
-            const _15minutes = _1hour/4
-            is_send = ((_now - _PROMOTION_ - _15minutes) / _1hour) >= hours
-        }
-        if (is_send && is_send === true) {
-            chrome.tabs.create({url: ldp.link, active: false}, function () {
-                chromeStorage.set('_PROMOTION_', _now)
-                if (tracker) {
-                    tracker.sendEvent('App', 'Promotion', ldp.name);
-                }
-            })
-        }
-    })
-}
